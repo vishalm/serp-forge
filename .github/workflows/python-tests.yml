@@ -43,9 +43,36 @@ jobs:
           pip install -r requirements.txt
           pip install pytest pytest-cov pytest-xvfb
 
+      - name: Install package in development mode
+        run: |
+          pip install -e .
+
+      - name: Debug test discovery
+        run: |
+          echo "Current directory: $(pwd)"
+          echo "Files in current directory:"
+          ls -la
+          echo "Files in tests directory:"
+          ls -la tests/
+          echo "Python path:"
+          python -c "import sys; print('\n'.join(sys.path))"
+          echo "Available packages:"
+          pip list
+
+      - name: Verify package installation
+        run: |
+          echo "Testing package import:"
+          python -c "import serp_forge; print('Package imported successfully')"
+          echo "Testing test discovery:"
+          python -m pytest --collect-only -q
+
+      - name: Run basic tests first
+        run: |
+          python -m pytest tests/ -v
+
       - name: Run tests with coverage
         run: |
-          pytest --cov=serp_forge --cov-report=xml --cov-report=term-missing --junitxml=pytest.xml -v
+          python -m pytest tests/ --cov=serp_forge --cov-report=xml --cov-report=term-missing --junitxml=pytest.xml -v --tb=long
 
       - name: Publish test results
         uses: EnricoMi/publish-unit-test-result-action@v2

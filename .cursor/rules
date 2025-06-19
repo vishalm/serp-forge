@@ -1,0 +1,256 @@
+# Serp Forge - Cursor AI Rules
+
+## Project Overview
+Serp Forge is an advanced web scraping solution powered by Serper API with anti-detection capabilities. The project provides both Python library and CLI interfaces for web scraping, news search, image search, and batch processing.
+
+## Code Style & Standards
+
+### Python Code
+- Follow PEP 8 style guidelines
+- Use type hints for all function parameters and return values
+- Use docstrings for all classes, methods, and functions
+- Prefer f-strings over .format() or % formatting
+- Use meaningful variable and function names
+- Keep functions focused and single-purpose
+- Use async/await for I/O operations when appropriate
+
+### File Organization
+- Use clear, descriptive file names
+- Group related functionality in modules
+- Keep imports organized and minimal
+- Use relative imports within the package
+
+### Error Handling
+- Use specific exception types
+- Provide meaningful error messages
+- Implement proper logging
+- Use try-except blocks appropriately
+- Return Result objects for operations that can fail
+
+## Architecture Guidelines
+
+### Core Components
+- `SerpForge`: Main class for API interactions
+- `SearchConfig`: Configuration management
+- `ContentConfig`: Content extraction settings
+- `ProxyConfig`: Proxy management
+- `SearchResult`: Result data models
+- `Article`: Individual result objects
+
+### Design Patterns
+- Use builder pattern for complex configurations
+- Implement factory pattern for different search types
+- Use strategy pattern for different extraction methods
+- Follow dependency injection principles
+
+### API Design
+- Keep APIs simple and intuitive
+- Provide both simple and advanced interfaces
+- Use sensible defaults
+- Support both sync and async operations
+- Return structured data objects
+
+## Documentation Standards
+
+### Code Documentation
+- Use Google-style docstrings
+- Include parameter types and descriptions
+- Document return values and exceptions
+- Provide usage examples in docstrings
+- Keep documentation up-to-date with code changes
+
+### README and Docs
+- Keep main README minimal and focused
+- Use separate markdown files for detailed documentation
+- Include practical examples
+- Provide clear installation and setup instructions
+- Document all configuration options
+
+## Testing Guidelines
+
+### Test Structure
+- Use pytest for testing framework
+- Organize tests in `tests/` directory
+- Use descriptive test names
+- Mock external dependencies
+- Test both success and failure cases
+
+### Test Coverage
+- Aim for high test coverage (>90%)
+- Test edge cases and error conditions
+- Use parameterized tests for similar scenarios
+- Test async functions properly
+
+## Security Considerations
+
+### API Keys
+- Never hardcode API keys in source code
+- Use environment variables for sensitive data
+- Validate API keys before use
+- Implement proper error handling for invalid keys
+
+### Data Handling
+- Sanitize user inputs
+- Validate URLs and parameters
+- Implement rate limiting
+- Handle sensitive data appropriately
+
+## Performance Guidelines
+
+### Optimization
+- Use async operations for I/O-bound tasks
+- Implement connection pooling
+- Use caching where appropriate
+- Optimize for memory usage
+- Profile code for bottlenecks
+
+### Scalability
+- Design for concurrent operations
+- Use batch processing for multiple queries
+- Implement proper resource management
+- Consider proxy rotation for large-scale scraping
+
+## Development Workflow
+
+### Git Practices
+- Use descriptive commit messages
+- Create feature branches for new development
+- Keep commits atomic and focused
+- Use conventional commit format
+
+### Code Review
+- Review all code changes
+- Ensure tests are included
+- Check documentation updates
+- Verify error handling
+
+## Project-Specific Rules
+
+### Serp Forge Specific
+- Always handle API rate limits gracefully
+- Implement proper retry logic with exponential backoff
+- Use anti-detection measures appropriately
+- Support multiple search types (web, news, images, videos)
+- Provide both simple and advanced interfaces
+
+### Configuration Management
+- Use Pydantic for configuration validation
+- Support both file-based and environment-based configuration
+- Provide sensible defaults
+- Allow runtime configuration updates
+
+### Error Handling
+- Use custom exception classes
+- Provide detailed error messages
+- Implement proper logging levels
+- Support error recovery where possible
+
+### CLI Interface
+- Follow CLI best practices
+- Provide helpful error messages
+- Support both interactive and batch modes
+- Include progress indicators for long operations
+
+## Examples and Templates
+
+### Class Template
+```python
+from typing import Optional, List, Dict, Any
+from pydantic import BaseModel
+
+class ExampleClass(BaseModel):
+    """Brief description of the class.
+    
+    Longer description if needed.
+    
+    Attributes:
+        attr1: Description of attribute
+        attr2: Description of attribute
+    """
+    
+    attr1: str
+    attr2: Optional[int] = None
+    
+    def method1(self, param: str) -> bool:
+        """Brief description of method.
+        
+        Args:
+            param: Description of parameter
+            
+        Returns:
+            Description of return value
+            
+        Raises:
+            ValueError: When parameter is invalid
+        """
+        # Implementation
+        pass
+```
+
+### Function Template
+```python
+from typing import Optional, List
+
+def example_function(
+    required_param: str,
+    optional_param: Optional[int] = None
+) -> List[str]:
+    """Brief description of function.
+    
+    Longer description if needed.
+    
+    Args:
+        required_param: Description of required parameter
+        optional_param: Description of optional parameter
+        
+    Returns:
+        List of strings
+        
+    Raises:
+        ValueError: When required_param is empty
+        ConnectionError: When network connection fails
+    """
+    # Implementation
+    pass
+```
+
+## AI Assistance Guidelines
+
+### When Helping with Code
+- Suggest improvements for error handling
+- Recommend performance optimizations
+- Ensure proper type hints are used
+- Check for security vulnerabilities
+- Validate configuration patterns
+
+### When Helping with Documentation
+- Keep examples practical and working
+- Include error handling in examples
+- Show both simple and advanced usage
+- Provide clear explanations
+- Link to related documentation
+
+### When Helping with Testing
+- Suggest comprehensive test cases
+- Include edge case testing
+- Recommend proper mocking strategies
+- Ensure async tests are handled correctly
+- Suggest performance testing approaches
+
+## Quality Assurance
+
+### Code Quality
+- Ensure code is readable and maintainable
+- Check for potential bugs and edge cases
+- Verify proper resource management
+- Validate error handling completeness
+- Confirm documentation accuracy
+
+### Performance
+- Suggest optimizations where appropriate
+- Check for memory leaks
+- Recommend caching strategies
+- Validate async patterns
+- Consider scalability implications
+
+Remember: The goal is to create a robust, maintainable, and user-friendly web scraping library that handles real-world scenarios effectively while providing excellent developer experience. 

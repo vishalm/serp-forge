@@ -1,0 +1,7 @@
+include requirements.txt
+include README.md
+include readme.md
+include setup.py
+include pyproject.toml
+recursive-include serp_forge *
+recursive-include tests * 

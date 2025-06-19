@@ -1,167 +1,183 @@
-# Publishing to PyPI
+# Publishing Guide for serp-forge
 
-This guide explains how to publish Serp Forge to PyPI.
+This guide covers both automated and manual publishing methods for the serp-forge package.
 
-## Prerequisites
+## 🚀 Automated Publishing (Recommended)
 
-1. **PyPI Account**: Create an account on [PyPI](https://pypi.org/account/register/)
-2. **TestPyPI Account**: Create an account on [TestPyPI](https://test.pypi.org/account/register/) for testing
-3. **API Token**: Generate an API token on PyPI for automated publishing
+### GitHub Actions Workflow
 
-## Setup
+The project includes an automated publishing workflow that triggers on:
 
-### 1. Install Publishing Tools
+1. **Tag-based releases**: Push a version tag (e.g., `v1.0.0`)
+2. **Manual triggers**: Use the GitHub Actions UI to manually trigger the workflow
+
+### Setup for Automated Publishing
+
+1. **Add PyPI API Token to GitHub Secrets**:
+   - Go to your GitHub repository → Settings → Secrets and variables → Actions
+   - Add a new repository secret named `PYPI_API_TOKEN`
+   - Set the value to your PyPI API token
+
+2. **Create and push a version tag**:
+   ```bash
+   git tag v1.0.0
+   git push origin v1.0.0
+   ```
+
+3. **Or trigger manually**:
+   - Go to Actions tab in your GitHub repository
+   - Select "Publish to PyPI" workflow
+   - Click "Run workflow"
+   - Enter the version number
+   - Click "Run workflow"
+
+### Workflow Features
+
+- ✅ Automatic package building
+- ✅ Package validation with `twine check`
+- ✅ Secure token-based authentication
+- ✅ Automatic GitHub release creation
+- ✅ Support for both tag-based and manual triggers
+
+## 🔧 Manual Publishing
+
+### Prerequisites
+
+1. **Install required tools**:
+   ```bash
+   pip install build twine
+   ```
+
+2. **Get PyPI API Token**:
+   - Go to [PyPI Account Settings](https://pypi.org/manage/account/)
+   - Create an API token with "Entire account" scope
+   - Copy the token (starts with `pypi-`)
+
+### Method 1: Using the Publish Script
+
+1. **Set your API token**:
+   ```bash
+   export TWINE_PASSWORD=your_pypi_api_token_here
+   ```
+
+2. **Run the publish script**:
+   ```bash
+   ./scripts/publish.sh [version]
+   ```
+
+### Method 2: Manual Commands
+
+1. **Clean previous builds**:
+   ```bash
+   rm -rf dist/ build/ *.egg-info/
+   ```
+
+2. **Build the package**:
+   ```bash
+   python -m build
+   ```
+
+3. **Check the built packages**:
+   ```bash
+   twine check dist/*
+   ```
+
+4. **Upload to PyPI**:
+   ```bash
+   twine upload dist/*
+   ```
+
+### Method 3: Using Environment Variables
 
 ```bash
-pip install build twine
-```
-
-### 2. Configure PyPI Credentials
-
-Create a `~/.pypirc` file:
-
-```ini
-[distutils]
-index-servers =
-    pypi
-    testpypi
-
-[pypi]
-repository = https://upload.pypi.org/legacy/
-username = __token__
-password = your_pypi_api_token_here
-
-[testpypi]
-repository = https://test.pypi.org/legacy/
-username = __token__
-password = your_testpypi_api_token_here
-```
-
-### 3. GitHub Secrets Setup
-
-Add these secrets to your GitHub repository:
-
-- `PYPI_API_TOKEN`: Your PyPI API token
-- `TEST_PYPI_API_TOKEN`: Your TestPyPI API token (optional)
-
-## Release Process
-
-### 1. Update Version
-
-Update the version in:
-- `pyproject.toml`
-- `serp_forge/__init__.py`
-
-### 2. Create Release Tag
-
-```bash
-# Commit your changes
-git add .
-git commit -m "chore: bump version to 1.0.0"
-
-# Create and push tag
-git tag v1.0.0
-git push origin v1.0.0
-```
-
-### 3. Automated Publishing
-
-The GitHub Actions workflow will automatically:
-- Run tests
-- Build the package
-- Publish to PyPI
-- Create a GitHub release
-
-### Manual Publishing (if needed)
-
-```bash
-# Build the package
-python -m build
-
-# Check the build
-twine check dist/*
-
-# Upload to TestPyPI (for testing)
-twine upload --repository testpypi dist/*
-
-# Upload to PyPI
+export TWINE_USERNAME=__token__
+export TWINE_PASSWORD=your_pypi_api_token_here
 twine upload dist/*
 ```
 
-## Testing Before Release
+## 📋 Pre-Publishing Checklist
 
-### 1. Test on TestPyPI
+Before publishing, ensure:
 
-```bash
-# Install from TestPyPI
-pip install --index-url https://test.pypi.org/simple/ serp-forge
+- [ ] All tests pass: `pytest`
+- [ ] Code is linted and formatted
+- [ ] Version number is updated in `pyproject.toml`
+- [ ] CHANGELOG.md is updated (if applicable)
+- [ ] README.md is up to date
+- [ ] All dependencies are correctly specified
+- [ ] Package builds successfully: `python -m build`
+- [ ] Package passes validation: `twine check dist/*`
 
-# Test the installation
-python -c "import serp_forge; print(serp_forge.__version__)"
-```
+## 🔄 Version Management
 
-### 2. Test Package
+### Updating Version
 
-```bash
-# Build and check
-python -m build
-twine check dist/*
+1. **Update version in `pyproject.toml`**:
+   ```toml
+   [project]
+   version = "1.0.1"
+   ```
 
-# Test installation from local build
-pip install dist/*.whl
-```
+2. **Commit the change**:
+   ```bash
+   git add pyproject.toml
+   git commit -m "Bump version to 1.0.1"
+   ```
 
-## Troubleshooting
+3. **Create and push a tag**:
+   ```bash
+   git tag v1.0.1
+   git push origin v1.0.1
+   ```
+
+### Semantic Versioning
+
+Follow [Semantic Versioning](https://semver.org/):
+- **MAJOR.MINOR.PATCH** (e.g., 1.0.0)
+- **MAJOR**: Breaking changes
+- **MINOR**: New features (backward compatible)
+- **PATCH**: Bug fixes (backward compatible)
+
+## 🛠️ Troubleshooting
 
 ### Common Issues
 
-1. **Authentication Errors**
-   - Verify your API token is correct
-   - Ensure the token has upload permissions
-   - Check your `~/.pypirc` configuration
+1. **Authentication Error**:
+   - Ensure your PyPI API token is correct
+   - Check that the token has the right permissions
 
-2. **Version Already Exists**
-   - PyPI doesn't allow overwriting existing versions
-   - Increment the version number
-   - Delete the old tag and create a new one
+2. **Package Already Exists**:
+   - Version numbers must be unique
+   - Increment the version number before re-publishing
 
-3. **Build Errors**
-   - Check that all dependencies are in `pyproject.toml`
-   - Verify the package structure is correct
-   - Run `python -m build --help` for options
+3. **Build Errors**:
+   - Check that all dependencies are installed
+   - Verify `pyproject.toml` syntax
+   - Ensure all required files are included in `MANIFEST.in`
 
-### Rollback Process
+4. **Validation Errors**:
+   - Run `twine check dist/*` to identify issues
+   - Check README.md formatting
+   - Verify package metadata
 
-If you need to rollback a release:
+### Getting Help
 
-1. **Delete the tag locally and remotely**
-   ```bash
-   git tag -d v1.0.0
-   git push origin :refs/tags/v1.0.0
-   ```
+- Check the [PyPI documentation](https://packaging.python.org/tutorials/packaging-projects/)
+- Review [twine documentation](https://twine.readthedocs.io/)
+- Check GitHub Actions logs for detailed error messages
 
-2. **Note**: PyPI doesn't allow deleting packages, but you can:
-   - Release a new version with fixes
-   - Mark the problematic version as deprecated
-
-## Best Practices
-
-1. **Always test on TestPyPI first**
-2. **Use semantic versioning**
-3. **Include comprehensive release notes**
-4. **Test the package after publishing**
-5. **Keep your API tokens secure**
-
-## Security Notes
+## 🔐 Security Notes
 
 - Never commit API tokens to version control
-- Use GitHub secrets for CI/CD
-- Regularly rotate your API tokens
-- Use TestPyPI for testing releases
+- Use GitHub Secrets for automated workflows
+- Use environment variables for manual publishing
+- Regularly rotate your PyPI API tokens
 
-## Support
+## 📊 Publishing Statistics
 
-If you encounter issues:
-1. Check the [PyPI documentation](https://packaging.python.org/tutorials/packaging-projects/)
-2. Review the [GitHub Actions logs](https://github.com/vishal-mishra/serp-forge/actions)
-3. Create an issue in the repository 
+After successful publishing, you can:
+
+- View your package on PyPI: https://pypi.org/project/serp-forge/
+- Check download statistics
+- Monitor package health
+- Respond to user feedback and issues 

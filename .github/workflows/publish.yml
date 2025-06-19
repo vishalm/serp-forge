@@ -4,6 +4,12 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish (e.g., 0.1.0)'
+        required: true
+        default: '0.1.0'
 
 jobs:
   deploy:
@@ -25,6 +31,9 @@ jobs:
       - name: Build package
         run: python -m build
 
+      - name: Check package
+        run: twine check dist/*
+
       - name: Publish to PyPI
         env:
           TWINE_USERNAME: __token__
@@ -37,7 +46,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ github.ref_name || github.event.inputs.version }}
+          release_name: Release ${{ github.ref_name || github.event.inputs.version }}
           draft: false
           prerelease: false 

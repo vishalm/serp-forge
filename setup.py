@@ -16,7 +16,7 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
 
 setup(
     name="serp-forge",
-    version="1.0.0",
+    version="1.0.1",
     author="Serp Forge Team",
     author_email="team@serp-forge.com",
     description="Advanced web scraping solution powered by Serper API with anti-detection capabilities",

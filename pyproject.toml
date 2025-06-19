@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "serp-forge"
-version = "1.0.0"
+version = "1.0.1"
 description = "A powerful web scraping toolkit for SERP data extraction and analysis"
 readme = "README.md"
 license = {text = "MIT"}

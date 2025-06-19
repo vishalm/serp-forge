@@ -1,7 +1,8 @@
-include requirements.txt
 include README.md
-include readme.md
-include setup.py
+include LICENSE
+include requirements.txt
 include pyproject.toml
-recursive-include serp_forge *
-recursive-include tests * 
+include setup.py
+recursive-include serp_forge *.yaml *.yml *.json
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co] 

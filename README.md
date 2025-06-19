@@ -1,5 +1,12 @@
 # Serp Forge 🚀
 
+[![CI: Python Tests](https://github.com/vishal-mishra/serp-forge/actions/workflows/python-tests.yml/badge.svg)](https://github.com/vishal-mishra/serp-forge/actions/workflows/python-tests.yml)
+[![PyPI version](https://badge.fury.io/py/serp-forge.svg)](https://badge.fury.io/py/serp-forge)
+[![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
+
 > **The next-generation search & web intelligence engine for developers, analysts, and AI workflows.**
 
 ---
@@ -42,10 +49,21 @@ flowchart TD
 
 ## 🚀 Quick Start
 
+### Installation
+
 ```bash
-# Install
+# Install from PyPI (recommended)
 pip install serp-forge
 
+# Or install from source
+git clone https://github.com/vishal-mishra/serp-forge.git
+cd serp-forge
+pip install -e .
+```
+
+### Setup
+
+```bash
 # Set API key
 export SERPER_API_KEY="your_api_key_here"
 
@@ -95,6 +113,33 @@ batch_results = sf.batch_scrape(queries, parallel=True)
 
 ---
 
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+
+### Development Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/vishal-mishra/serp-forge.git
+cd serp-forge
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install in development mode
+pip install -e .
+
+# Install development dependencies
+pip install -r requirements.txt
+
+# Run tests
+pytest
+```
+
+---
+
 ## 📚 Documentation
 
 - [Installation Guide](docs/INSTALLATION.md)
@@ -102,6 +147,17 @@ batch_results = sf.batch_scrape(queries, parallel=True)
 - [Configuration](docs/CONFIGURATION.md)
 - [API Reference](docs/API.md)
 - [CLI Reference](docs/CLI.md)
+- [Testing Guide](TESTING.md)
+
+---
+
+## 📦 PyPI Package
+
+Serp Forge is available on PyPI: https://pypi.org/project/serp-forge/
+
+```bash
+pip install serp-forge
+```
 
 ---
 

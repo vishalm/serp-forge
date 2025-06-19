@@ -284,7 +284,6 @@ temp/
 # Test files
 test_*.py
 *_test.py
-tests/
 test/
 
 # Documentation builds
